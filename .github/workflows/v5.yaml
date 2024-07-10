@@ -10,6 +10,7 @@ on:
         options:
           - 'opendatahub.io'
           - 'red-hat-data-services'
+          - 'Raghul-M'
       sync_repo:
         description: 'Select Repository'
         required: true
