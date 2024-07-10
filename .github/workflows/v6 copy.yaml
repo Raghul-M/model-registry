@@ -65,7 +65,7 @@ jobs:
           git checkout ${{ github.event.inputs.release_branch }}
 
       - name: git-rebase
-        uses: tiacsys/git-rebase@v3
+        uses: tiacsys/git-rebase@v1
         with:
           repo: ${{ github.event.inputs.org }}/${{ github.event.inputs.sync_repo }}
           source_branch: ${{ github.event.inputs.main_branch }}
