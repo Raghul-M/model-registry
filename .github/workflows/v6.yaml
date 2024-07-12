@@ -71,13 +71,10 @@ jobs:
           force: true
           tags: true
       
-      - name: Create release-v2 branch if not exists
-        run: |
-            git push -u origin release-v2  # Push release-v2 branch to remote
-
     
       - name: Push changes to release branch & Create a PR
         run: |
+          git checkout ${{ github.event.inputs.release_branch }}
           git log -n 1 --pretty=format:"%H - %s"
           git push -f origin ${{ github.event.inputs.release_branch }}
           gh pr create --repo ${{ github.event.inputs.org }}/${{ github.event.inputs.sync_repo }} \
