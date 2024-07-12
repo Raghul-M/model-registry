@@ -1,4 +1,4 @@
-name: Push to Release Branch Sync
+name: v6 Push to Release Branch Sync
 
 on:
   workflow_dispatch:
@@ -63,13 +63,13 @@ jobs:
       - name: Sync
       - uses: TobKed/github-forks-sync-action@master
         with:
-            github_token: ${{ secrets.ACTIONS_PAT }}
-            upstream_repository: ${{ github.event.inputs.org }}/${{ github.event.inputs.sync_repo }}
-            target_repository: default
-            upstream_branch: ${{ github.event.inputs.main_branch }}
-            target_branch: ${{ github.event.inputs.release_branch }}
-            force: true
-            tags: true
+          github_token: ${{ secrets.ACTIONS_PAT }}
+          upstream_repository: ${{ github.event.inputs.org }}/${{ github.event.inputs.sync_repo }}
+          target_repository: default
+          upstream_branch: ${{ github.event.inputs.main_branch }}
+          target_branch: ${{ github.event.inputs.release_branch }}
+          force: true
+          tags: true
 
 
 
