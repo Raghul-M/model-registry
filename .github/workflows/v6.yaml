@@ -71,6 +71,17 @@ jobs:
           force: true
           tags: true
 
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+            token: ${{ secrets.ACTIONS_PAT }}
+            commit-message: 'Sync changes from ${{ github.event.inputs.main_branch }} to ${{ github.event.inputs.release_branch }}'
+            branch: ${{ github.event.inputs.release_branch }}
+            title: 'Sync changes from ${{ github.event.inputs.main_branch }} to ${{ github.event.inputs.release_branch }}'
+            body: 'This is an automated PR created by the GitHub Action to sync changes from the main branch to the release branch.'
+            base: ${{ github.event.inputs.main_branch }}
+            head: ${{ github.event.inputs.release_branch }}
+
 
 
              
