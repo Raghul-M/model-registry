@@ -61,11 +61,11 @@ jobs:
         run: git fetch --all
 
       - name: Sync
-      - uses: TobKed/github-forks-sync-action@master
+        uses: TobKed/github-forks-sync-action@master
         with:
           github_token: ${{ secrets.ACTIONS_PAT }}
           upstream_repository: ${{ github.event.inputs.org }}/${{ github.event.inputs.sync_repo }}
-          target_repository: default
+          target_repository: ${{ github.repository }}
           upstream_branch: ${{ github.event.inputs.main_branch }}
           target_branch: ${{ github.event.inputs.release_branch }}
           force: true
