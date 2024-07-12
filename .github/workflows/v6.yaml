@@ -71,14 +71,18 @@ jobs:
           force: true
           tags: true
 
-      - name: Authenticate GitHub CLI
-        run: echo "${{ secrets.ACTIONS_PAT }}" | gh auth login --with-token
-
-      - name: Create Pull Request
+    
+      - name: Push changes to release branch & Create a PR
         run: |
-          gh pr create --title "Sync changes from ${{ github.event.inputs.main_branch }} to ${{ github.event.inputs.release_branch }}" --body "This is an automated PR created by the GitHub Action to sync changes from the main branch to the release branch." 
-          --head ${{ github.event.inputs.release_branch }} --base ${{ github.event.inputs.main_branch }}
-
+          git log -n 1 --pretty=format:"%H - %s"
+          git push -f origin ${{ github.event.inputs.release_branch }}
+          gh pr create --repo ${{ github.event.inputs.org }}/${{ github.event.inputs.sync_repo }} \
+            --head ${{ github.event.inputs.release_branch }} \
+            --base ${{ github.event.inputs.main_branch }} \
+            --title "Sync changes from ${{ github.event.inputs.main_branch }} to ${{ github.event.inputs.release_branch }}" \
+            --body "This is an automated PR created by the GitHub Action to sync changes from the main branch to the release branch."
+        env:
+          GITHUB_TOKEN: ${{ secrets.ACTIONS_PAT }}         
 
 
              
