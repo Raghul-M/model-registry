@@ -1,5 +1,5 @@
 package main
-
+#added comment
 import (
 	"github.com/golang/glog"
 	"github.com/kubeflow/model-registry/cmd"
