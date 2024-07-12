@@ -70,6 +70,10 @@ jobs:
           target_branch: ${{ github.event.inputs.release_branch }}
           force: true
           tags: true
+      
+      - name: Create release-v2 branch if not exists
+        run: |
+            git push -u origin release-v2  # Push release-v2 branch to remote
 
     
       - name: Push changes to release branch & Create a PR
