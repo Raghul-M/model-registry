@@ -38,6 +38,12 @@ on:
 env:
   ACTIONS_PAT: ${{ secrets.ACTIONS_PAT }}
 
+permissions:
+  # Need `contents: read` to checkout the repository
+  # Need `contents: write` to merge branches
+  contents: write
+  
+
 jobs:
   push-release-branch:
     runs-on: ubuntu-latest
@@ -53,6 +59,7 @@ jobs:
         with:
             repository: ${{ github.event.inputs.org }}/${{ github.event.inputs.sync_repo }}
             token: ${{ secrets.ACTIONS_PAT }}
+            fetch-depth: 0
 
       
       - name: Print current repository
@@ -61,13 +68,13 @@ jobs:
       - name: Fetch all branches
         run: git fetch --all
 
-      - name: Sync
-        uses: devmasx/merge-branch@master
+
+      - name: Merge Master to Production branch
+        uses: devvspaces/merge-branches@v1
         with:
-            type: now
-            from_branch: ${{ github.event.inputs.main_branch }}
-            target_branch: ${{ github.event.inputs.release_branch }}
-            github_token: ${{ secrets.ACTIONS_PAT }}
+              token: ${{ secrets.ACTIONS_PAT }}
+              from_branch: ${{ github.event.inputs.main_branch }}
+              to_branch: ${{ github.event.inputs.release_branch }}
       
       - name: Create release-v2 branch if not exists
         run: |
