@@ -16,6 +16,7 @@ on:
         required: true
         type: choice
         options:
+          - 'Test-Sync'
           - 'modelmesh'
           - 'caikit-tgis-serving'
           - 'openvino'
@@ -70,7 +71,7 @@ jobs:
       
       - name: Create release-v2 branch if not exists
         run: |
-            git push -u origin release-v2  # Push release-v2 branch to remote
+            git push -u origin ${{ github.event.inputs.release_branch }}  # Push release-v2 branch to remote
 
     
       - name: Push changes to release branch & Create a PR
