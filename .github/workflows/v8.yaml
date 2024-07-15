@@ -81,7 +81,6 @@ jobs:
     
       - name: Push changes to release branch & Create a PR
         run: |
-          git log -n 1 --pretty=format:"%H - %s"
           git push -f origin ${{ github.event.inputs.release_branch }}
           gh pr create --repo ${{ github.event.inputs.org }}/${{ github.event.inputs.sync_repo }} \
             --head ${{ github.event.inputs.release_branch }} \
