@@ -1,4 +1,4 @@
-name: v7 Push to Release Branch Sync
+name: v8 Push to Release Branch Sync
 
 on:
   workflow_dispatch:
@@ -68,29 +68,15 @@ jobs:
       - name: Fetch all branches
         run: git fetch --all
 
-      - name: Create new branch for sync
-        run: |
-          git checkout -b sync-from-${{ github.event.inputs.main_branch }}
+      - name: Check out release branch
+        run: git checkout ${{ github.event.inputs.release_branch }}
 
-      - name: Pull changes from main branch
+      - name: Merge main into release
         run: |
-          git pull origin ${{ github.event.inputs.main_branch }}
+          git merge ${{ github.event.inputs.main_branch }} || echo "Already up to date"
 
-      - name: Push new branch
-        run: |
-          git push origin sync-from-${{ github.event.inputs.main_branch }}
-
-
-      - name: Merge Master to Production branch
-        uses: devvspaces/merge-branches@v1
-        with:
-              token: ${{ secrets.ACTIONS_PAT }}
-              from_branch: ${{ github.event.inputs.main_branch }}
-              to_branch: ${{ github.event.inputs.release_branch }}
-      
-      - name: Create release-v2 branch if not exists
-        run: |
-            git push -u origin ${{ github.event.inputs.release_branch }}  # Push release-v2 branch to remote
+      - name: Push changes to release
+        run: git push origin ${{ github.event.inputs.release_branch }}
 
     
       - name: Push changes to release branch & Create a PR
