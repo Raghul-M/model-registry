@@ -73,10 +73,6 @@ jobs:
           git checkout ${{ github.event.inputs.release_branch }}
           git fetch origin
 
-      - name: Merge main into release
-        run: |
-          git merge origin/main
-
       - name: Push changes to release branch & Create a PR
         run: |
             git push origin ${{ github.event.inputs.release_branch }}
