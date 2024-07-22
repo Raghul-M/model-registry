@@ -72,6 +72,7 @@ jobs:
 
       - name: Merge release branch into sync-new-release
         run: |
+          git config pull.ff only
           git pull origin ${{ github.event.inputs.main_branch }}  # Ensure you have the latest changes from 'main'
           git merge main
 
