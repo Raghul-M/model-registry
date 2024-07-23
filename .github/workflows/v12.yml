@@ -1,4 +1,4 @@
-name: v11 Main branch to Release Branch Sync PR
+name: v12 Main branch to Release Branch Sync PR
 
 on:
   workflow_dispatch:
@@ -73,10 +73,11 @@ jobs:
       - name: Merge release branch into sync-new-release
         run: |
           git pull origin ${{ github.event.inputs.main_branch }}  # Ensure you have the latest changes from 'main'
-          git merge main
 
-          - name: Push sync-new-release branch
-          run: git push origin sync-new-release
+      - name: Push sync-new-release branch
+        run: git push origin sync-new-release
+
+
         
       - name: Create a PR
         run: |

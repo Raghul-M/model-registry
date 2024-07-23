@@ -92,7 +92,7 @@ jobs:
         run: |
             git push -u origin ${{ github.event.inputs.release_branch }}  # Push release-v2 branch to remote
 
-    
+
       - name: Push changes to release branch & Create a PR
         run: |
           git log -n 1 --pretty=format:"%H - %s"
