@@ -72,11 +72,10 @@ jobs:
 
       - name: Merge release branch into sync-new-release
         run: |
-          git pull origin ${{ github.event.inputs.main_branch }}  # Ensure you have the latest changes from 'main'
-          git merge main
+          git fetch origin ${{ github.event.inputs.main_branch }}  # Ensure you have the latest changes from 'main'
 
-          - name: Push sync-new-release branch
-          run: git push origin sync-new-release
+      - name: Push sync-new-release branch
+        run: git push origin sync-new-release
         
       - name: Create a PR
         run: |
