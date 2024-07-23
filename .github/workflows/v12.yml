@@ -64,6 +64,12 @@ jobs:
       - name: Fetch all branches
         run: git fetch --all
 
+      - name: Check out and create sync-release branch
+        run: |
+          git checkout ${{ github.event.inputs.release_branch }}
+          git pull origin ${{ github.event.inputs.release_branch }}
+          git checkout -b sync-new-release
+
       - name: Sync
         uses: TobKed/github-forks-sync-action@master
         with:
@@ -71,7 +77,7 @@ jobs:
           upstream_repository: ${{ github.event.inputs.org }}/${{ github.event.inputs.sync_repo }}
           target_repository: ${{ github.event.inputs.org }}/${{ github.event.inputs.sync_repo }}
           upstream_branch: ${{ github.event.inputs.main_branch }}
-          target_branch: ${{ github.event.inputs.release_branch }}
+          target_branch: sync-new-release
           force: false
           tags: false
         
