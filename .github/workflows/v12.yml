@@ -1,4 +1,4 @@
-name: v11 Main branch to Release Branch Sync PR
+name: v12 Main branch to Release Branch Sync PR
 
 on:
   workflow_dispatch:
