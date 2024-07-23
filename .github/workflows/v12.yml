@@ -1,4 +1,4 @@
-name: v12 Main branch to Release Branch Sync PR
+name: v11 Main branch to Release Branch Sync PR
 
 on:
   workflow_dispatch:
@@ -64,20 +64,16 @@ jobs:
       - name: Fetch all branches
         run: git fetch --all
 
-      - name: Check out and create sync-release branch
-        run: |
-          git checkout ${{ github.event.inputs.release_branch }}
-          git pull origin ${{ github.event.inputs.release_branch }}
-          git checkout -b sync-new-release
-
-      - name: Merge release branch into sync-new-release
-        run: |
-          git pull origin ${{ github.event.inputs.main_branch }}  # Ensure you have the latest changes from 'main'
-
-      - name: Push sync-new-release branch
-        run: git push origin sync-new-release
-
-
+      - name: Sync
+        uses: TobKed/github-forks-sync-action@master
+        with:
+          github_token: ${{ secrets.ACTIONS_PAT }}
+          upstream_repository: ${{ github.event.inputs.org }}/${{ github.event.inputs.sync_repo }}
+          target_repository: ${{ github.event.inputs.org }}/${{ github.event.inputs.sync_repo }}
+          upstream_branch: ${{ github.event.inputs.main_branch }}
+          target_branch: ${{ github.event.inputs.release_branch }}
+          force: true
+          tags: true
         
       - name: Create a PR
         run: |
