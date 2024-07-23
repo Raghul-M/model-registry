@@ -72,8 +72,8 @@ jobs:
           target_repository: ${{ github.event.inputs.org }}/${{ github.event.inputs.sync_repo }}
           upstream_branch: ${{ github.event.inputs.main_branch }}
           target_branch: ${{ github.event.inputs.release_branch }}
-          force: true
-          tags: true
+          force: false
+          tags: false
         
       - name: Create a PR
         run: |
